@@ -1,25 +1,46 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<head>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
+    <style type="text/css">
+    table {
+     border-collapse: collapse;
+    }
+    th {
+     background: #ccc;
+     text-align: left;
+    }
+    td, th {
+     border: 1px solid #888;
+     padding: 4px;
+    }
+  </style>
+
+</head>
+
+
 <body>
+<div>Login: <a href="/auth/github">GitHub</a>, <a href="/auth/facebook">Facebook</a></div>
+<h1>Krazy Ideas</h1>
 
 <div class="row">
     <div class="col-sm-6">
-        <div ng-app="myApp" ng-controller="myCtrl">
-            <div ng-repeat="idea in ideas">
-                {{idea}}
-            </div>
-        </div>
+        <table  width="100%" cellspacing="0" border="1" ng-app="myApp" ng-controller="myCtrl">
+            <tr><th>Name</th><th>Description</th></tr>
+            <tr ng-repeat="idea in ideas">
+                <td>{{idea.name}}</td><td>{{idea.description}}</td>
+            </tr>
+        </table>
     </div>
 </div>
 
 <script>
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope, $http) {
-        $http.get("http://localhost:3000/ideas")
+        $http.get("/ideas")
                 .then(function(response) {
                     $scope.ideas = response.data;
                 });

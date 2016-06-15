@@ -4,10 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
 
 // JS Route files
 var ideas = require('./routes/ideas');
-
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -28,8 +30,12 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'krazy_passphrase', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/ideas', ideas);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,6 +66,17 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+var mustAuthenticatedMw = function (req, res, next){
+  req.isAuthenticated()
+      ? next()
+      : res.redirect('/login');
+};
+
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
 });
 
 
