@@ -32,7 +32,7 @@
             <tr><th>Name</th><th>Description</th><th>Vote Count</th><th>Vote</th></tr>
             <tr ng-repeat="idea in ideas">
                 <td>{{idea.name}}</td><td>{{idea.description}}</td><td>{{idea.voteCount}}</td>
-                <td><button ng-click="myFunction()" ng-controller="voteCtrl">Vote</button></td>
+                <td><button ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">Vote</button></td>
             </tr>
         </table>
     </div>
@@ -47,21 +47,20 @@
                 });
     });
     app.controller('voteCtrl', function($scope, $window, $http) {
-    $scope.myFunction = function() {
+    $scope.myFunction = function(ideaHref) {
+        console.log("ideaHref: " + ideaHref);
         $http({
           method: 'POST',
           url: '/vote',
           headers: {
             'Content-Type': "application/json"
           },
-          // TODO remove hard coded urls
-          data: { "person" : "http://localhost:8080/people/1",
-                  "idea" : "http://localhost:8080/idea/3" }
+          data: { "idea" : ideaHref }
         }
       ).then(function successCallback(response) {
             console.log("response.status: " + response.status);
             console.log("data: " + JSON.stringify(response.data));
-            // TODO update ui
+            $scope.idea.voteCount++;
           }, function errorCallback(response) {
             console.log("response.status: " + response.status);
             console.log("data: " + JSON.stringify(response.data));

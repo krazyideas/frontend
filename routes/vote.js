@@ -12,10 +12,17 @@ router.post('/', function(req, res, next) {
     console.log("req.isAuthenticated()" + req.isAuthenticated());
 
     if (req.isAuthenticated()) {
+
+      var idea = req.body.idea;
+      // TODO get it from request
+      var person = "/people/2";
       var options = {
         uri: conf.backendUrl+voteUrl,
         method: 'POST',
-        json: req.body
+        json: {
+          "idea" : idea,
+          "person" : person
+          }
       };
 
       request(options, function (error, response, body) {
