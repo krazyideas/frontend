@@ -10,6 +10,7 @@ var passport = require('passport');
 // JS Route files
 var ideas = require('./routes/ideas');
 var auth = require('./routes/auth');
+var vote = require('./routes/vote');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(passport.session());
 
 app.use('/ideas', ideas);
 app.use('/auth', auth);
+app.use('/vote', vote);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
