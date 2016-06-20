@@ -14,8 +14,11 @@ router.post('/', function(req, res, next) {
     if (req.isAuthenticated()) {
 
       var idea = req.body.idea;
-      // TODO get it from request
-      var person = "/people/2";
+      var person = req.user.href;
+
+      console.log("idea: " + idea);
+      console.log("person: " + person);
+
       var options = {
         uri: conf.backendUrl+voteUrl,
         method: 'POST',

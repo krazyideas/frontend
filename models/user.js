@@ -1,11 +1,12 @@
 var mainConfig = require('../conf/main');
 var request = require('request');
 
-function User(id, name, email, authId) {
+function User(id, name, email, authId, href) {
   this.id = id;
   this.name = name;
   this.email = email;
   this.authId = authId;
+  this.href = href;
 }
 
 var API_URLS = {
@@ -62,7 +63,8 @@ function searchPeople(api, arg, callback) {
                         person.id,
                         person.name,
                         person.email,
-                        person.authId
+                        person.authId,
+                        person._links.self.href
                     );
 
                     callback(null, user);
@@ -90,7 +92,8 @@ function createPerson(userData, callback) {
                 body.id,
                 userData.name,
                 userData.email,
-                userData.authId
+                userData.authId,
+                userData.href = body._links.self.href
             );
             console.log("New user has been created:\n"+require("util").inspect(user));
             callback(null, user);
