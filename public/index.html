@@ -22,16 +22,17 @@
 </head>
 
 
-<body>
+<body ng-app="myApp">
 <div>Login: <a href="/auth/github">GitHub</a>, <a href="/auth/facebook">Facebook</a></div>
 <h1>Krazy Ideas</h1>
 
 <div class="row">
     <div class="col-sm-6">
-        <table  width="100%" cellspacing="0" border="1" ng-app="myApp" ng-controller="myCtrl">
-            <tr><th>Name</th><th>Description</th></tr>
+        <table  width="100%" cellspacing="0" border="1" ng-controller="myCtrl">
+            <tr><th>Name</th><th>Description</th><th>Vote Count</th><th>Vote</th></tr>
             <tr ng-repeat="idea in ideas">
-                <td>{{idea.name}}</td><td>{{idea.description}}</td>
+                <td>{{idea.name}}</td><td>{{idea.description}}</td><td>{{idea.voteCount}}</td>
+                <td><button ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">Vote</button></td>
             </tr>
         </table>
     </div>
@@ -44,6 +45,28 @@
                 .then(function(response) {
                     $scope.ideas = response.data;
                 });
+    });
+    app.controller('voteCtrl', function($scope, $window, $http) {
+    $scope.myFunction = function(ideaHref) {
+        console.log("ideaHref: " + ideaHref);
+        $http({
+          method: 'POST',
+          url: '/vote',
+          headers: {
+            'Content-Type': "application/json"
+          },
+          data: { "idea" : ideaHref }
+        }
+      ).then(function successCallback(response) {
+            console.log("response.status: " + response.status);
+            console.log("data: " + JSON.stringify(response.data));
+            $scope.idea.voteCount++;
+          }, function errorCallback(response) {
+            console.log("response.status: " + response.status);
+            console.log("data: " + JSON.stringify(response.data));
+          });
+
+        }
     });
 </script>
 
