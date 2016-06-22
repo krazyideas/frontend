@@ -1,42 +1,83 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
+
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-    <style type="text/css">
-    table {
-     border-collapse: collapse;
-    }
-    th {
-     background: #ccc;
-     text-align: left;
-    }
-    td, th {
-     border: 1px solid #888;
-     padding: 4px;
-    }
-  </style>
-
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 </head>
 
-
 <body ng-app="myApp">
-<div>Login: <a href="/auth/github">GitHub</a>, <a href="/auth/facebook">Facebook</a></div>
-<h1>Krazy Ideas</h1>
 
-<div class="row">
-    <div class="col-sm-6">
-        <table  width="100%" cellspacing="0" border="1" ng-controller="myCtrl">
-            <tr><th>Name</th><th>Description</th><th>Vote Count</th><th>Vote</th></tr>
-            <tr ng-repeat="idea in ideas">
-                <td>{{idea.name}}</td><td>{{idea.description}}</td><td>{{idea.voteCount}}</td>
-                <td><button ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">Vote</button></td>
-            </tr>
-        </table>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
+            <div class="row" style="height:12.5vh;">
+                <div class="col-sm-3 col-md-3 col-sm-offset-9 col-md-offset-9 user-div">
+                    <button type="button" class="btn btn-primary btn-block">TEST_USER</button>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="nav nav-tabs">
+                    <li><a data-toggle="tab" href="#me">Me</a></li>
+                    <li class="active"><a data-toggle="tab" href="#ideas">Ideas</a></li>
+                </ul>
+            </div>
+            <div class="row" style="height:77.5vh;">
+                <div class="tab-content">
+                    <div id="me" class="tab-pane fade">
+                        <h3>Menu 1</h3>
+                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo consequat.</p>
+                    </div>
+                    <div id="ideas" class="tab-pane fade in active">
+                        <div class="col-sm-2 col-md-2 col-sm-offset-5 col-md-offset-5" style="height:10vh;">
+                            <div style="text-align:center">
+                                <h1>Ideas</h1>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2" style="height:50vh;">
+                            <table class="table table-striped table-bordered" ng-controller="myCtrl">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Votes</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="idea in ideas">
+                                      <td>{{idea.name}}</td><td>{{idea.description}}</td><td>{{idea.voteCount}}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3" style="height:17.5vh;">
+                            <div style="text-align:center">
+                                <ul class="pagination pagination">
+                                    <li><a href="#">Prev</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <script>
     var app = angular.module('myApp', []);
@@ -71,4 +112,5 @@
 </script>
 
 </body>
+
 </html>
