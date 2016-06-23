@@ -1,4 +1,17 @@
+td {
+    word-wrap: break-word;
+}
+
+table {
+    table-layout: fixed;
+}
+
 .user-div {
     margin-top: 2%;
     margin-bottom: 2%;
+}
+
+.idea-name {
+    display:flex;
+    justify-content: space-between;
 }
