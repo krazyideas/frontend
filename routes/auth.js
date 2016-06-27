@@ -4,6 +4,7 @@ var passport = require('passport');
 var User = require('../models/user');
 var GitHubStrategy = require('passport-github2').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var LdapStrategy = require('passport-ldapauth').Strategy;
 
 
 passport.serializeUser(function(user, callback) {
@@ -14,7 +15,7 @@ passport.deserializeUser(function(sessObj, callback) {
     callback(null, sessObj);
 });
 
-function authCallback(accessToken, refreshToken, profile, callback) {
+function authIdCallback(accessToken, refreshToken, profile, callback) {
     var userData = {
         authId: profile.id + "@" + profile.provider,
         name: profile.displayName ? profile.displayName : profile.username,
@@ -26,12 +27,30 @@ function authCallback(accessToken, refreshToken, profile, callback) {
     });
 }
 
+function ldapCallback(user, done) {
+    var userData = {
+        authId: user.uid + "@ldap",
+        name: user.cn,
+        email: user.mail ? user.mail : null
+    };
+
+    User.findOrCreate(userData, function (err, user) {
+        return done(err, user);
+    });
+}
+
+
 var providers = require('../conf/auth-providers');
-passport.use(new GitHubStrategy(providers.github, authCallback));
-passport.use(new FacebookStrategy(providers.facebook, authCallback));
+passport.use(new GitHubStrategy(providers.github, authIdCallback));
+passport.use(new FacebookStrategy(providers.facebook, authIdCallback));
+passport.use(new LdapStrategy(providers.ldap, ldapCallback));
 
 router.get('/github', passport.authenticate('github', {scope: ['user:email']}));
 router.get('/facebook', passport.authenticate('facebook', {scope: ['read_stream']}));
+router.post('/ldap', passport.authenticate('ldapauth', {session: true}), function(req, res) {
+    console.log('LDAP callback: SUCCESS');
+    res.send({status: 'ok'});
+});
 
 router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/login'}),
     function(req, res) {
