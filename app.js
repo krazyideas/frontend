@@ -11,6 +11,7 @@ var passport = require('passport');
 var ideas = require('./routes/ideas');
 var auth = require('./routes/auth');
 var vote = require('./routes/vote');
+var config = require('./routes/config')
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use(passport.session());
 app.use('/ideas', ideas);
 app.use('/auth', auth);
 app.use('/vote', vote);
+app.use('/config', config);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
