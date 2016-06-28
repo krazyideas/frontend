@@ -18,6 +18,7 @@
     "serve-favicon": "~2.3.0",
     "passport": "*",
     "passport-github2": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "passport-ldapauth": "*"
   }
 }

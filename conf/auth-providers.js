@@ -13,4 +13,16 @@ config.facebook = {
     clientSecret: "6a30fdeea9486fb4a36d917e95c09401",
     callbackURL: mainConfig.frontendUrl + "/auth/facebook/callback"
 };
+
+config.ldap = {
+    usernameField: 'login',
+    server: {
+        url: 'ldap://172.17.0.2:389',
+        bindDn: "cn=admin,dc=example,dc=org",
+        bindCredentials: "admin",
+        searchBase: "ou=users,o=example,dc=example,dc=org",
+        searchFilter: "(uid={{username}})"
+    }
+};
+
 module.exports = config;
