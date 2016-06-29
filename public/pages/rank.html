@@ -14,7 +14,9 @@
             </thead>
             <tbody>
             <tr ng-repeat="idea in ideas">
-                <td><span class="idea-name">{{idea.name}}<button class="btn btn-primary btn-sm">vote</button></span></td><td>{{idea.description}}</td><td>{{idea.voteCount}}</td>
+                <td><span class="idea-name">{{idea.name}}<button class="btn btn-primary btn-sm" ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">vote</button></span></td>
+                <td>{{idea.description}}</td>
+                <td>{{idea.voteCount}}</td>
             </tr>
             </tbody>
         </table>
