@@ -5,21 +5,20 @@
     <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/login.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 </head>
 
-<body ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="loginCtrl">
     <div class="container-fluid">
         <div class="row" style="margin-top:15vh;">
             <div class="col-sm-2 col-md-2 col-sm-offset-5 col-md-offset-5" style="height:100%;">
-                <button ng-show="enableGithub" type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh">Github</button>
+                <button ng-show="enableGithub" type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh" ng-click="login('/github')">Github</button>
                 <button ng-show="enableGoogle" type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh">Google+</button>
                 <button ng-show="enableLinkedIn" type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh">LinkedIn</button>
-                <button ng-show="enableFacebook" type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh">Facebook</button>
+                <button ng-show="enableFacebook" type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh" ng-click="login('/facebook')">Facebook</button>
             </div>
         </div>
     </div>
