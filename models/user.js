@@ -1,4 +1,4 @@
-var mainConfig = require('../conf/main');
+var mainConfig = require('../configAccess');
 var request = require('request');
 
 function User(id, name, email, authId, href) {
