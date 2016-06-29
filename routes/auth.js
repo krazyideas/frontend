@@ -40,7 +40,7 @@ function ldapCallback(user, done) {
 }
 
 
-var providers = require('../conf/auth-providers');
+var providers = require('../configAccess').providers;
 passport.use(new GitHubStrategy(providers.github, authIdCallback));
 passport.use(new FacebookStrategy(providers.facebook, authIdCallback));
 passport.use(new LdapStrategy(providers.ldap, ldapCallback));
