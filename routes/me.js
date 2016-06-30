@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
         });
     } else {
         res.statusCode = 401;
-        //res.send("login before voting");
+        res.end();
     }
 
 
