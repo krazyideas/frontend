@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngAnimate', 'ui.bootstrap']);
+var app = angular.module('myApp', ['ngAnimate', 'ui.bootstrap', 'ngSanitize']);
 
 app.controller('myCtrl', function($scope, $http) {
     $http.get("/ideas").then(function(response) {
