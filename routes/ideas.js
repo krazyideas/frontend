@@ -17,4 +17,25 @@ router.get('/', function(req, res, next) {
     })
 });
 
+router.post('/', function(req, res, next) {
+    console.log("body" + JSON.stringify(req.body));
+    var idea = req.body.idea;
+
+    console.log("idea: " + idea);
+
+    var options = {
+        uri: idea,
+        method: 'GET'
+    };
+
+    request(options, function (error, response, body) {
+        console.log("sc: " + response.statusCode)
+        console.log("body: " + JSON.stringify(body))
+        res.statusCode = response.statusCode;
+        res.send(body);
+    });
+
+
+});
+
 module.exports = router;

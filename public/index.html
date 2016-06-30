@@ -20,11 +20,11 @@
                     <button type="button" class="btn btn-primary btn-block" ng-click="testLDAP()">LDAP Auth</button>
                 </div>
             </div>
-            <div class="row">
-                <uib-tabset active="1">
+            <div class="row" ng-init="tabIndex = 1" ng-controller="tabCtrl">
+                <uib-tabset active="tabIndex">
                     <uib-tab index="0" heading="Me"><div tab-me></div></uib-tab>
                     <uib-tab index="1" heading="Rank"><div tab-rank></div></uib-tab>
-                    <uib-tab index="2" heading="Idea"><div tab-idea></div></uib-tab>
+                    <uib-tab index="2" heading="Idea" select="tabIdeaFunc()"><div tab-idea></div></uib-tab>
                 </uib-tabset>
             </div>
         </div>
