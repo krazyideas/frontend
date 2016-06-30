@@ -49,6 +49,41 @@ app.controller('voteCtrl', function($scope, $window, $http) {
     }
 });
 
+app.controller('tabCtrl', function($scope, $window, $http) {
+
+    var idea = null;
+
+    $scope.goToIdeaTab = function(ideaHref) {
+        console.log("tabsCtrl ideaHref: " + ideaHref);
+        $scope.tabIndex = 2;
+        idea = ideaHref;
+    };
+
+    $scope.tabIdeaFunc = function() {
+        console.log("yyy: ");
+        if (idea!=null) {
+            console.log("zzz: ");
+            $http({
+                    method: 'POST',
+                    url: '/ideas',
+                    headers: {
+                        'Content-Type': "application/json"
+                    },
+                    data: { "idea" : idea }
+                }
+            ).then(function successCallback(response) {
+                console.log("response.status: " + response.status);
+                console.log("data: " + JSON.stringify(response.data));
+                $scope.selectedIdea = response.data;
+            }, function errorCallback(response) {
+                console.log("response.status: " + response.status);
+                console.log("data: " + JSON.stringify(response.data));
+            });
+        }
+       
+    }
+});
+
 app.directive('tabMe', function() {
     return {
         restrict: 'A',
