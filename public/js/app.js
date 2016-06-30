@@ -81,6 +81,22 @@ app.controller('tabCtrl', function($scope, $window, $http) {
             });
         }
        
+    };
+
+    $scope.tabMeFunc = function() {
+        console.log("xxx: ");
+        $http({
+                method: 'GET',
+                url: '/me'
+            }
+        ).then(function successCallback(response) {
+            console.log("response.status: " + response.status);
+            console.log("data: " + JSON.stringify(response.data));
+            $scope.me = response.data;
+        }, function errorCallback(response) {
+            console.log("response.status: " + response.status);
+            //console.log("data: " + JSON.stringify(response.data));
+        });
     }
 });
 
