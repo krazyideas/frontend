@@ -11,8 +11,8 @@ var passport = require('passport');
 var ideas = require('./routes/ideas');
 var auth = require('./routes/auth');
 var vote = require('./routes/vote');
-var config = require('./routes/config')
-var me = require('./routes/me')
+var config = require('./routes/config');
+var me = require('./routes/me');
 
 var app = express();
 
@@ -72,17 +72,6 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
-});
-
-var mustAuthenticatedMw = function (req, res, next){
-  req.isAuthenticated()
-      ? next()
-      : res.redirect('/login');
-};
-
-app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
 });
 
 

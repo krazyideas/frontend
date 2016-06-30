@@ -66,4 +66,9 @@ router.get('/facebook/callback', passport.authenticate('facebook', { failureRedi
     }
 );
 
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 module.exports = router;
