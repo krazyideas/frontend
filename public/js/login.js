@@ -7,9 +7,6 @@ app.controller('loginCtrl', function ($scope, $uibModal, $log, $http, $window) {
     $http.get('/config/enabledProviders').then(function(res) {
         console.log(res.data);
         $scope.enabled = res.data;
-        $scope.enableGoogle = res.data.google;
-        $scope.enableLinkedIn = res.data.linkedIn;
-        $scope.enableFacebook = res.data.facebook;
     });
 
     $http.get("/me").then(function successCallback(res) {
