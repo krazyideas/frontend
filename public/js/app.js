@@ -80,7 +80,7 @@ app.controller('tabCtrl', function($scope, $window, $http) {
                 console.log("data: " + JSON.stringify(response.data));
             });
         }
-       
+
     };
 
     $scope.tabMeFunc = function() {
@@ -98,6 +98,19 @@ app.controller('tabCtrl', function($scope, $window, $http) {
                 console.log("response.status: " + response.status);
                 //console.log("data: " + JSON.stringify(response.data));
             });
+        }
+        if ($scope.votedIdeas == null) {
+          $http({
+                  method: 'GET',
+                  url: '/me/voteHistory'
+              }
+          ).then(function successCallback(response) {
+              console.log("votedIdeas response.status: " + response.status);
+              console.log("votedIdeas data: " + JSON.stringify(response.data));
+              $scope.votedIdeas = response.data;
+          }, function errorCallback(response) {
+              console.log("votedIdeas response.status: " + response.status);
+          });
         }
     }
 });
