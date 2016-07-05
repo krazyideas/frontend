@@ -19,5 +19,16 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="row" ng-controller="authCtrl" ng-show="enabled.ldap">
+            <hr/>
+            <div class="col-md-5 col-md-offset-4" style="height:100%;">
+                <label for="ldapName">Login: </label><br/><input  id="ldapName" type="text" ng-model="ldapName"/>
+                <label for="ldapPass">Password: </label><br/><input id="ldapPass" type="password" ng-model="ldapPass"/>
+                <br/><br/>
+                <button type="button" class="btn btn-primary btn-lg" style="width:80%; margin-bottom:1vh" ng-click="testLDAP()">LDAP Auth</button>
+            </div>
+        </div>
     </div>
 </script>

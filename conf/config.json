@@ -5,7 +5,8 @@
 		"github": true,
 		"facebook": true,
 		"linkedIn": false,
-		"google": false
+		"google": false,
+		"ldap": true
 	},
 	"providers": {
 		"github": {
