@@ -6,22 +6,24 @@ app.controller('myCtrl', function($scope, $http) {
     });
 });
 
-app.controller('authCtrl', function($scope, $http) {
+app.controller('authCtrl', function($scope, $http, $window) {
     $scope.testLDAP = function () {
-        var login = "vustinov";
-        var password = "12345x";
-
         $http({
             method: 'POST',
             url: '/auth/ldap',
             data: {
-                "login": login,
-                "password": password
+                "login": $scope.ldapName,
+                "password": $scope.ldapPass
             }
         }).then(function successCallback(response) {
-            alert("SUCCESS" + response.toSource());
+            console.log(response);
+            if (response.status == 200 && response.data.status == 'ok') {
+                $window.location.reload();
+            } else {
+                alert("Status: " + response.status + ", Data: " + response.data);
+            }
         }, function errorCallback(response) {
-            alert("ERROR: " + response.toSource());
+            alert("Status: " + response.status + ", Data: " + response.data);
         });
     };
 });
@@ -83,7 +85,6 @@ app.controller('tabCtrl', function($scope, $window, $http) {
 
     $scope.tabMeFunc = function() {
         if ($scope.me == null) {
-            console.log("xxx: ");
             $http({
                     method: 'GET',
                     url: '/me'
