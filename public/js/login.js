@@ -1,8 +1,9 @@
 var app = angular.module('ui.bootstrap.modal');
 
-app.controller('loginCtrl', function ($scope, $uibModal, $log, $http, $window) {
+app.controller('loginCtrl', function ($scope, $uibModal, $log, $http, $window, $rootScope) {
 
-    $scope.loggedIn = false;
+    $rootScope.glob$loggedIn = false;
+    $rootScope.glob$adminFlag = false;
 
     $http.get('/config/enabledProviders').then(function(res) {
         console.log(res.data);
@@ -10,9 +11,11 @@ app.controller('loginCtrl', function ($scope, $uibModal, $log, $http, $window) {
     });
 
     $http.get("/me").then(function successCallback(res) {
-        $scope.loggedIn = true;
+        $rootScope.glob$loggedIn = true;
+        $rootScope.glob$adminFlag = res.data.adminFlag;
     }, function errorCallback(res) {
-        $scope.loggedIn = false;
+        $rootScope.glob$loggedIn = false;
+        $rootScope.glob$adminFlag = false;
     });
 
     $scope.login = function(path) {

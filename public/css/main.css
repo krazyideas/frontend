@@ -15,3 +15,12 @@ table {
     display:flex;
     justify-content: space-between;
 }
+
+.ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+}

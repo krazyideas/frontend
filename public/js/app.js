@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngAnimate', 'ui.bootstrap', 'ngSanitize']);
+var app = angular.module('myApp', ['ngAnimate', 'ui.bootstrap', 'ngSanitize', 'textAngular']);
 
 app.controller('myCtrl', function($scope, $http) {
     $http.get("/ideas").then(function(response) {
@@ -60,9 +60,7 @@ app.controller('tabCtrl', function($scope, $window, $http) {
     };
 
     $scope.tabIdeaFunc = function() {
-        console.log("yyy: ");
         if (idea!=null) {
-            console.log("zzz: ");
             $http({
                     method: 'POST',
                     url: '/ideas',
@@ -134,4 +132,29 @@ app.directive('tabIdea', function() {
         restrict: 'A',
         templateUrl: 'pages/idea.html'
     };
+});
+
+app.controller('ideaUpdater', function ($scope, $http) {
+
+    $scope.submitIdea = function (idea, resultVarName)
+    {
+        var body = {
+            "href": idea._links.self.href,
+            "data": {
+                "name": idea.name,
+                "description": idea.description,
+                "shortDescription": idea.shortDescription,
+                "html": idea.html
+            }
+        };
+
+        $http.post("/ideas/update", body)
+            .success(function (data, status, headers, config) {
+                alert("Result: "+data);
+            })
+            .error(function (data, status, headers, config) {
+                alert("Error: "+data);
+            });
+    };
+
 });
