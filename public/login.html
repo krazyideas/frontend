@@ -1,6 +1,6 @@
 <div ng-controller="loginCtrl">
-    <button ng-show="!loggedIn" type="button" class="btn btn-default" ng-click="openAuthDialog()">Log in</button>
-    <button ng-show="loggedIn"  type="button" class="btn btn-default" ng-click="logout()">Log out</button>
+    <button ng-show="!glob$loggedIn" type="button" class="btn btn-default" ng-click="openAuthDialog()">Log in</button>
+    <button ng-show="glob$loggedIn"  type="button" class="btn btn-default" ng-click="logout()">Log out</button>
 </div>
 
 <script type="text/ng-template" id="myModalContent.html">

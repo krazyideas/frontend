@@ -1,9 +1,36 @@
 <!-- idea tab -->
-<h3>Idea</h3>
+<h3>Idea: {{selectedIdea.name}}</h3>
+
+<div>Votes count: {{selectedIdea.voteCount}}</div>
+
+<form ng-show="glob$adminFlag" name="ideaForm" ng-submit="submitIdea(selectedIdea)" novalidate ng-controller="ideaUpdater">
+    <table border="0">
+        <tr>
+            <td width="20%"><label><input type="checkbox" ng-model="cbName"> Name:</label></td>
+            <td><input type="text" name="name" ng-model="selectedIdea.name" required ng-disabled="!cbName"/></td>
+        </tr>
+        <tr>
+            <td><label><input type="checkbox" ng-model="cbDescr"> Description:</label></td>
+            <td><textarea maxlength="255" type="text" name="name" ng-model="selectedIdea.shortDescription" cols="50" rows="5" required ng-disabled="!cbDescr">{{shortDescription}}</textarea></td>
+        </tr>
+        <tr>
+            <td><label><input type="checkbox" ng-model="cbShDescr"> Short Description:</label></td>
+            <td><input maxlength="255" type="text" name="name" ng-model="selectedIdea.description" required ng-disabled="!cbShDescr"/></td>
+        </tr>
+        <tr><td colspan="2"><hr/></td></tr>
+        <tr>
+            <td><label><input type="checkbox" ng-model="cbHtml"> HTML:</label></td>
+            <td><div text-angular ng-model="selectedIdea.html" ng-show="cbHtml"></div><p ng-hide="cbHtml" ng-bind-html="selectedIdea.html"></p></td>
+        </tr>
+    </table>
+    <hr/>
+    <button type="submit" ng-disabled="ideaForm.$invalid">Submit</button>
+</form>
+
+<div ng-hide="glob$adminFlag">
 <div>name: {{selectedIdea.name}}</div>
 <div>description: {{selectedIdea.description}}</div>
 <div>shortDescription: {{selectedIdea.shortDescription}}</div>
-<div>voteCount: {{selectedIdea.voteCount}}</div>
 <div>href: {{selectedIdea._links.self.href}}</div>
-
 <p ng-bind-html="selectedIdea.html"></p>
+</div>

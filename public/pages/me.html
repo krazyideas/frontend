@@ -2,6 +2,7 @@
     <div class="col-sm-3 col-md-3" style="height:50vh;">
         <h3>{{me.name}}</h3>
         <p>
+            <div ng-show="glob$adminFlag" style="color: red;">Administrator</div>
             <div>id: {{me.id}}</div>
             <div>email: {{me.email}}</div>
             <div>authId: {{me.authId}}</div>

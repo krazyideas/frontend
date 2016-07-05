@@ -38,4 +38,21 @@ router.post('/', function(req, res, next) {
 
 });
 
+router.post("/update", function (req, res, next) {
+
+    var options = {
+        uri: req.body.href,
+        method: 'PUT',
+        json: req.body.data
+    };
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.send("SUCCESS");
+        } else {
+            res.send(error);
+        }
+    });
+});
+
 module.exports = router;
