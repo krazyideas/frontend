@@ -1,0 +1,6 @@
+---
+applications:
+- name: krazyideas-frontend
+  memory: 512M
+  instances: 1
+  command: node bin/www
