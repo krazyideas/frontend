@@ -29,8 +29,8 @@ function authIdCallback(accessToken, refreshToken, profile, callback) {
 
 function ldapCallback(user, done) {
     var userData = {
-        authId: user.uid + "@ldap",
-        name: user.cn,
+        authId: user.cn + "@ldap",
+        name: user.displayName,
         email: user.mail ? user.mail : null
     };
 
