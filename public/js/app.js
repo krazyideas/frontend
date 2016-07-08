@@ -4,6 +4,17 @@ app.controller('myCtrl', function($scope, $http) {
     $http.get("/ideas").then(function(response) {
         $scope.ideas = response.data;
     });
+    $scope.currentPage = 1;
+    $scope.maxsize = 5;
+    $scope.itemsPerPage = 5;
+    $scope.pageIdeas = function() {
+        if (!$scope.ideas) {
+            return null;
+        } else {
+            var start = ($scope.currentPage - 1) * $scope.itemsPerPage;
+            return $scope.ideas.slice(start, start + $scope.itemsPerPage);
+        }
+    }
 });
 
 app.controller('authCtrl', function($scope, $http, $window) {
