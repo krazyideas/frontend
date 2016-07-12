@@ -8,13 +8,13 @@
             <table class="table table-striped table-bordered table-responsive">
                 <thead>
                     <tr>
-                        <th class="col-xs-3">Name</th>
+                        <th class="col-xs-3"><a href="" ng-click="sortBy('name')">Name</a></th>
                         <th class="col-xs-7">Description</th>
-                        <th class="col-xs-2">Votes</th>
+                        <th class="col-xs-2"><a href="" ng-click="sortBy('voteCount')">Votes</a></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="idea in pageIdeas()">
+                    <tr ng-repeat="idea in pageIdeas() | orderBy:propertyName:reverse">
                         <td><span class="idea-name"><a href="" ng-click="goToIdeaTab(idea._links.self.href)">{{idea.name}}</a><button class="btn btn-primary btn-sm" ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">vote</button></span></td>
                         <td>{{idea.description}}</td>
                         <td>{{idea.voteCount}}</td>
