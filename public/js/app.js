@@ -7,6 +7,8 @@ app.controller('myCtrl', function($scope, $http) {
     $scope.currentPage = 1;
     $scope.maxsize = 5;
     $scope.itemsPerPage = 5;
+    $scope.propertyName = 'voteCount';
+    $scope.reverse = true;
     $scope.pageIdeas = function() {
         if (!$scope.ideas) {
             return null;
@@ -14,6 +16,10 @@ app.controller('myCtrl', function($scope, $http) {
             var start = ($scope.currentPage - 1) * $scope.itemsPerPage;
             return $scope.ideas.slice(start, start + $scope.itemsPerPage);
         }
+    }
+    $scope.sortBy = function(propertyName) {
+        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
     }
 });
 
