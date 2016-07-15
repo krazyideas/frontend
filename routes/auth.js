@@ -19,7 +19,7 @@ function authIdCallback(accessToken, refreshToken, profile, callback) {
     var userData = {
         authId: profile.id + "@" + profile.provider,
         name: profile.displayName ? profile.displayName : profile.username,
-        email: profile.emails ? profile.emails.length ? profile.emails[0] : null : null
+        email: profile.emails ? profile.emails.length ? profile.emails[0].value : null : null
     };
 
     User.findOrCreate(userData, function (err, user) {
