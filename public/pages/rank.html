@@ -15,7 +15,8 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="idea in pageIdeas() | orderBy:propertyName:reverse">
-                        <td><span class="idea-name"><a href="" ng-click="goToIdeaTab(idea._links.self.href)">{{idea.name}}</a><button class="btn btn-primary btn-sm" ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">vote</button></span></td>
+                        <td><span class="idea-name"><a href="" ng-click="goToIdeaTab(idea._links.self.href)">{{idea.name}}</a>
+                            <button class="btn btn-primary btn-sm" ng-show="canVote(idea._links.self.href)" ng-click="myFunction(idea._links.self.href)" ng-controller="voteCtrl">vote</button></span></td>
                         <td>{{idea.description}}</td>
                         <td>{{idea.voteCount}}</td>
                     </tr>
