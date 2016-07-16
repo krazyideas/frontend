@@ -21,6 +21,20 @@ app.controller('myCtrl', function($scope, $http) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
         $scope.propertyName = propertyName;
     }
+    $scope.loadMe = function() {
+        if (!$scope.me) {
+            $http({
+                    method: 'GET',
+                    url: '/me'
+                }
+            ).then(function successCallback(response) {
+                $scope.me = response.data;
+            }, function errorCallback(response) {
+                console.log("response.status: " + response.status);
+                console.log("data: " + JSON.stringify(response.data));
+            });
+        }
+    }
 });
 
 app.controller('authCtrl', function($scope, $http, $window) {
@@ -46,6 +60,12 @@ app.controller('authCtrl', function($scope, $http, $window) {
 });
 
 app.controller('voteCtrl', function($scope, $window, $http) {
+    $scope.canVoteCache = {}
+
+    parseIdeaIdFromHref = function(ideaHref) {
+        return ideaHref.substring(ideaHref.lastIndexOf('/') + 1);
+    }
+
     $scope.myFunction = function(ideaHref) {
         console.log("ideaHref: " + ideaHref);
         $http({
@@ -60,11 +80,36 @@ app.controller('voteCtrl', function($scope, $window, $http) {
             console.log("response.status: " + response.status);
             console.log("data: " + JSON.stringify(response.data));
             $scope.idea.voteCount++;
+
+            var ideaId = parseIdeaIdFromHref(ideaHref);
+            $scope.canVoteCache[ideaId] = false;
         }, function errorCallback(response) {
             console.log("response.status: " + response.status);
             console.log("data: " + JSON.stringify(response.data));
         });
+    }
 
+    $scope.canVote = function(ideaHref) {
+        if (!$scope.me) return false;
+        var personId = $scope.me.id;
+        var ideaId = parseIdeaIdFromHref(ideaHref);
+
+        if ($scope.canVoteCache[ideaId] == undefined) {
+            $scope.canVoteCache[ideaId] = false;
+            $http({
+                method: 'POST',
+                async: false,
+                url: '/vote/search',
+                data: { "personId" : personId,
+                        "ideaId": ideaId }
+            }).then(function successCallback(response) {
+                $scope.canVoteCache[ideaId] = false;
+            }, function errorCallback(response) {
+                $scope.canVoteCache[ideaId] = true;
+            });
+        }
+
+        return $scope.canVoteCache[ideaId];
     }
 });
 
@@ -101,20 +146,6 @@ app.controller('tabCtrl', function($scope, $window, $http) {
     };
 
     $scope.tabMeFunc = function() {
-        if ($scope.me == null) {
-            $http({
-                    method: 'GET',
-                    url: '/me'
-                }
-            ).then(function successCallback(response) {
-                console.log("response.status: " + response.status);
-                console.log("data: " + JSON.stringify(response.data));
-                $scope.me = response.data;
-            }, function errorCallback(response) {
-                console.log("response.status: " + response.status);
-                //console.log("data: " + JSON.stringify(response.data));
-            });
-        }
         if ($scope.votedIdeas == null) {
           $http({
                   method: 'GET',

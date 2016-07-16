@@ -11,6 +11,7 @@ var passport = require('passport');
 var ideas = require('./routes/ideas');
 var auth = require('./routes/auth');
 var vote = require('./routes/vote');
+var voteSearch = require('./routes/voteSearch');
 var config = require('./routes/config');
 var me = require('./routes/me');
 
@@ -40,6 +41,7 @@ app.use(passport.session());
 app.use('/ideas', ideas);
 app.use('/auth', auth);
 app.use('/vote', vote);
+app.use('/vote/search', voteSearch)
 app.use('/config', config);
 app.use('/me', me);
 
