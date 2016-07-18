@@ -67,8 +67,11 @@ router.get('/voteHistory', function(req, res, next) {
                     }
                 });
             };
-
-            getVoteHistory(0);
+            if(links.length != 0){
+                getVoteHistory(0);
+            } else {
+                res.send([]);
+            }
         });
     } else {
         res.statusCode = 401;
