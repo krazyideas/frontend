@@ -1,8 +1,22 @@
 var app = angular.module('myApp', ['ngAnimate', 'ui.bootstrap', 'ngSanitize', 'textAngular']);
 
-app.controller('myCtrl', function($scope, $http) {
+app.controller('ideasCtrl', function($scope, $http) {
+    var votedIdeas = {};
     $http.get("/ideas").then(function(response) {
         $scope.ideas = response.data;
+        $http.get("/me/voteHistory").then(function(response1) {
+            votedIdeas = response1.data;
+            if(votedIdeas.length != 0) {
+                $scope.ideas.forEach(function(idea) {
+                    idea["voted"] = false;
+                    votedIdeas.forEach(function(votedIdea){
+                        if(idea._links.self.href === votedIdea._links.self.href) {
+                            idea.voted = true;
+                        }
+                    });
+                });
+            }
+        });
     });
     $scope.currentPage = 1;
     $scope.maxsize = 5;
@@ -46,7 +60,19 @@ app.controller('authCtrl', function($scope, $http, $window) {
 });
 
 app.controller('voteCtrl', function($scope, $window, $http) {
-    $scope.myFunction = function(ideaHref) {
+    $scope.getVoteClass = function() {
+        if($scope.idea.voted) {
+            return 'btn btn-danger btn-sm'
+        }
+        return 'btn btn-primary btn-sm'
+    }
+    $scope.getVoteText = function() {
+        if($scope.idea.voted) {
+            return "unvote"
+        }
+        return "vote"
+    }
+    var vote = function(ideaHref) {
         console.log("ideaHref: " + ideaHref);
         $http({
                 method: 'POST',
@@ -60,11 +86,37 @@ app.controller('voteCtrl', function($scope, $window, $http) {
             console.log("response.status: " + response.status);
             console.log("data: " + JSON.stringify(response.data));
             $scope.idea.voteCount++;
+            $scope.idea.voted = true;
         }, function errorCallback(response) {
             console.log("response.status: " + response.status);
             console.log("data: " + JSON.stringify(response.data));
         });
-
+    }
+    var unvote = function(ideaId) {
+        $http({
+                method: 'DELETE',
+                url: '/vote',
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: { "ideaId" : ideaId }
+            }
+        ).then(function successCallback(response) {
+            console.log("response.status: " + response.status);
+            console.log("data: " + JSON.stringify(response.data));
+            $scope.idea.voteCount--;
+            $scope.idea.voted = false;
+        }, function errorCallback(response) {
+            console.log("response.status: " + response.status);
+            console.log("data: " + JSON.stringify(response.data));
+        });
+    }
+    $scope.voteOrUnvote = function() {
+        if($scope.idea.voted) {
+            unvote($scope.idea.id);
+        } else {
+            vote($scope.idea._links.self.href);
+        }
     }
 });
 
@@ -115,19 +167,17 @@ app.controller('tabCtrl', function($scope, $window, $http) {
                 //console.log("data: " + JSON.stringify(response.data));
             });
         }
-        if ($scope.votedIdeas == null) {
-          $http({
-                  method: 'GET',
-                  url: '/me/voteHistory'
-              }
-          ).then(function successCallback(response) {
-              console.log("votedIdeas response.status: " + response.status);
-              console.log("votedIdeas data: " + JSON.stringify(response.data));
-              $scope.votedIdeas = response.data;
-          }, function errorCallback(response) {
-              console.log("votedIdeas response.status: " + response.status);
-          });
-        }
+        $http({
+            method: 'GET',
+            url: '/me/voteHistory'
+            }
+        ).then(function successCallback(response) {
+            console.log("votedIdeas response.status: " + response.status);
+            console.log("votedIdeas data: " + JSON.stringify(response.data));
+            $scope.votedIdeas = response.data;
+        }, function errorCallback(response) {
+            console.log("votedIdeas response.status: " + response.status);
+        });
     }
 });
 
