@@ -60,6 +60,7 @@ router.delete('/', function(req, res, next) {
          };
 
         console.log("uri: "+ conf.backendUrl + searchVoteUrl + "?personId=" + personId + "&ideaId=" + ideaId);
+        /* get the vote of the user on the idea */
         request(options, function (error, response, body) {
             var voteHref = JSON.parse(body)._links.self.href;
             console.log("voteHref: " + voteHref);
@@ -67,6 +68,7 @@ router.delete('/', function(req, res, next) {
                 uri: voteHref,
                 method: 'DELETE'
             }
+            /* delete the vote */
             request(options1, function (error, response, body) {
                 console.log("delete result: " + JSON.stringify(response));
                 res.statusCode = response.statusCode;
