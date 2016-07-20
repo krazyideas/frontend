@@ -57,6 +57,19 @@ app.controller('authCtrl', function($scope, $http, $window) {
             alert("Status: " + response.status + ", Data: " + response.data);
         });
     };
+    $scope.loadMe = function() {
+        if (!$scope.me) {
+            $http({
+                method: 'GET',
+                url: '/me'
+            }).then(function successCallback(response) {
+                $scope.me = response.data;
+            }, function errorCallback(response) {
+                console.log("response.status: " + response.status);
+                console.log("data: " + JSON.stringify(response.data));
+            });
+        }
+    }
 });
 
 app.controller('voteCtrl', function($scope, $window, $http) {
@@ -118,6 +131,9 @@ app.controller('voteCtrl', function($scope, $window, $http) {
             vote($scope.idea._links.self.href);
         }
     }
+    $scope.isLoggedIn = function() {
+        return $scope.me != undefined;
+    }
 });
 
 app.controller('tabCtrl', function($scope, $window, $http) {
@@ -153,20 +169,6 @@ app.controller('tabCtrl', function($scope, $window, $http) {
     };
 
     $scope.tabMeFunc = function() {
-        if ($scope.me == null) {
-            $http({
-                    method: 'GET',
-                    url: '/me'
-                }
-            ).then(function successCallback(response) {
-                console.log("response.status: " + response.status);
-                console.log("data: " + JSON.stringify(response.data));
-                $scope.me = response.data;
-            }, function errorCallback(response) {
-                console.log("response.status: " + response.status);
-                //console.log("data: " + JSON.stringify(response.data));
-            });
-        }
         $http({
             method: 'GET',
             url: '/me/voteHistory'
