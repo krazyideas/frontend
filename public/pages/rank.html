@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="idea in pageIdeas() | orderBy:propertyName:reverse">
-                        <td><span class="idea-name"><a href="" ng-click="goToIdeaTab(idea._links.self.href)">{{idea.name}}</a><button ng-class="getVoteClass(idea)" ng-click="voteOrUnvote(idea)" ng-controller="voteCtrl">{{getVoteText(idea)}}</button></span></td>
+                        <td><span class="idea-name"><a href="" ng-click="goToIdeaTab(idea._links.self.href)">{{idea.name}}</a><button ng-class="getVoteClass()" ng-show="isLoggedIn()" ng-click="voteOrUnvote()" ng-controller="voteCtrl">{{getVoteText()}}</button></span></td>
                         <td>{{idea.description}}</td>
                         <td>{{idea.voteCount}}</td>
                     </tr>
