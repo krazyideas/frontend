@@ -56,3 +56,14 @@
         </table>
     </div>
 </div>
+
+<form ng-show="glob$loggedIn" name="commentForm" ng-submit="submitComment(selectedIdea, comment)" novalidate ng-controller="commentUpdater">
+    <table border="0">
+        <tr><td colspan="2"><hr/></td></tr>
+        <tr>
+            <td><div text-angular ng-model="comment.content"></div></td>
+        </tr>
+    </table>
+    <hr/>
+    <button type="submit">Submit</button>
+</form>

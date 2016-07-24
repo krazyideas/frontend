@@ -245,3 +245,12 @@ app.controller('ideaUpdater', function ($scope, $http) {
     };
 
 });
+
+app.controller('commentUpdater', function ($scope, $http) {
+
+    $scope.submitComment = function (idea, comment)
+    {
+        console.log("idea: " + idea);
+        console.log("content: " + comment.content);
+    };
+});
