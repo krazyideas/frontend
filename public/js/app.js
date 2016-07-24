@@ -160,6 +160,23 @@ app.controller('tabCtrl', function($scope, $window, $http) {
                 console.log("response.status: " + response.status);
                 console.log("data: " + JSON.stringify(response.data));
                 $scope.selectedIdea = response.data;
+
+                if (response.data._links.comments.href) {
+                    console.log("comment link: " + response.data._links.comments.href);
+                    $http({
+                            method: 'GET',
+                            url: "/comment?url=" + response.data._links.comments.href
+                        }
+                    ).then(function successCallback(response) {
+                        console.log("response.status: " + response.status);
+                        console.log("data: " + JSON.stringify(response.data));
+                        $scope.comments = response.data;
+                    }, function errorCallback(response) {
+                        console.log("response.status: " + response.status);
+                        console.log("data: " + JSON.stringify(response.data));
+                    });
+                }
+
             }, function errorCallback(response) {
                 console.log("response.status: " + response.status);
                 console.log("data: " + JSON.stringify(response.data));

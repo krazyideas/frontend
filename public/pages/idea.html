@@ -34,3 +34,25 @@
 <div>href: {{selectedIdea._links.self.href}}</div>
 <p ng-bind-html="selectedIdea.html"></p>
 </div>
+<div>
+    <h6>
+        Posted Comments
+    </h6>
+
+    <div>
+        <table class="table table-striped table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th class="col-xs-7">content</th>
+                <th class="col-xs-5">time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="comment in comments">
+                <td>{{comment.content}}</td>
+                <td>{{comment.creationTime}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
